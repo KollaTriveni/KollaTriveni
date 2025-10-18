@@ -1,33 +1,26 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import re
+# app.py
+from flask import Flask, request, jsonify # type: ignore
+from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Function to check for malicious email content
-def is_malicious_email(email_content):
-    suspicious_keywords = [
-        'password', 'credit card', 'click here', 'urgent', 'suspicious', 'account locked', 
-        'verify now', 'free', 'lottery', 'bank', 'fraud', 'limited time offer', 'urgent response needed'
-    ]
-
-    for keyword in suspicious_keywords:
-        if re.search(r'\b' + re.escape(keyword) + r'\b', email_content, re.IGNORECASE):
-            return True
-    return False
-
-@app.route('/analyze-email', methods=['POST'])
+@app.route('/analyze', methods=['POST'])
 def analyze_email():
-    data = request.get_json()
-    
-    if 'emailContent' not in data or not data['emailContent']:
-        return jsonify({'error': 'No email content provided'}), 400
+    data = request.json
+    email_content = data.get('emailContent', '')
 
-    email_content = data['emailContent']
-    is_malicious = is_malicious_email(email_content)
-    
-    return jsonify({'malicious': is_malicious})
+    # Simple analysis logic (you can enhance this)
+    malicious_keywords = ["phishing", "scam", "attack", "ransom","password", "credit card", "click here", "urgent", "suspicious", "account locked", 
+        "verify now", "free", "lottery", "bank", "fraud", "limited time offer", "urgent response needed"
+]
+    is_malicious = any(keyword in email_content.lower() for keyword in malicious_keywords)
+
+    # Respond with the analysis result
+    return jsonify({
+        'isMalicious': is_malicious,
+        'message': 'This email is flagged as MALICIOUS!' if is_malicious else 'This email appears SAFE.'
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
