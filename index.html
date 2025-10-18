@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malicious Email Detection</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analyzer</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
 </head>
 <body>
-  <div class="container">
-    <h1>Inbox Defender</h1>
-    <form id="emailForm">
-      <label for="emailContent">Paste Email Content Here:</label>
-      <textarea id="emailContent" name="emailContent" rows="10" cols="50" placeholder="Paste email content here"></textarea>
-      <button type="submit">Analyze Email</button>
-    </form>
-    <div id="result" class="result"></div>
-  </div>
-
-  <script src="script.js"></script>
+    <div class="container">
+        <h1 id="appTitle">Inbox Defender</h1>
+        <form id="emailForm">
+            <label for="emailContent">Enter Email Content:</label>
+            <textarea id="emailContent" rows="10" placeholder="Paste your email content here..." data-tooltip="Enter the full email content"></textarea>
+            <div class="counter">
+                <span id="charCount">0/1000 characters</span>
+                <span id="wordCount">0 words</span>
+            </div>
+            <div id="emailValidation"></div>
+            <button type="submit" id="analyzeBtn">Analyze Email</button>
+            <button type="button" id="clearBtn">Clear</button>
+        </form>
+        <div id="result" class="result"></div>
+        <div class="loading" id="loadingSpinner">Analyzing...</div>
+        <button type="button" id="downloadReportBtn" style="display: none;">Download Report</button>
+    </div>
+    <div class="settings">
+        <button id="darkModeToggle">Toggle Dark Mode</button>
+        <select id="languageSelect" data-tooltip="Choose your language">
+            <option value="en" selected>English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+        </select>
+        <input type="file" id="bgImageInput" accept="image/*" style="margin-top: 10px;">
+    </div>
+    <script src="script.js"></script> <!-- Link to the JavaScript file -->
 </body>
 </html>
