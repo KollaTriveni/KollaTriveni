@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
         downloadReportBtn.style.display = 'none';
   
         // Send email content to the backend for analysis
-        fetch('http://127.0.0.1:5000/analyze', {
+        fetch('https://kollatriveni.onrender.com', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,3 +83,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
   });
+
